@@ -1,40 +1,37 @@
 import { NextRequest } from "next/server";
 
-let blogs:any = [];
-let blogIndex = 0;
+let blogs: any[] = [];
+let idCounter = 0;
+
 
 export async function POST(req: Request, res: Response) {
   const data = await req.json();
   const header = data.header;
   const author = data.author;
   const text = data.text;
-  const id = blogIndex;
-  blogs[blogIndex] = { header, author, text, id };
-  blogIndex++;
+  const id = idCounter++;
+  blogs.push({ header, author, text, id });
 
-  return new Response(JSON.stringify({ operation: "done" }), { status: 200 });
+  return Response.json({ operation: "done" }, { status: 200 });
 }
 
 export async function GET(req: Request, res: Response) {
-  return new Response(JSON.stringify({ data: blogs }));
+  
+  return Response.json({blogs},{status:200});
 }
 
 export async function DELETE(req: NextRequest, res: Response) {
   const id = req.nextUrl.searchParams.get("id");
   if (id === null || isNaN(Number(id))) {
-    return new Response(JSON.stringify({ error: "Invalid ID" }), { status: 400 });
+    return Response.json({ error: "Invalid ID" }, { status: 400 });
   }
 
-  const index = Number(id);
-  if (index < 0 || index >= blogs.length) {
-    return new Response(JSON.stringify({ error: "ID out of bounds" }), { status: 404 });
+  const index = blogs.findIndex(blog => blog.id === Number(id));
+  if (index === -1) {
+    return  Response.json({ error: "ID not found" }, { status: 404 });
   }
 
   blogs.splice(index, 1);
-  
-  // برای بروزرسانی مقادیر id بعد از حذف یک عنصر
-  blogs = blogs.map((blog:any, idx:any) => ({ ...blog, id: idx }));
-  blogIndex = blogs.length;
 
-  return new Response(JSON.stringify({ operation: "done" }), { status: 200 });
+  return Response.json({ operation: "done" }, { status: 200 });
 }
