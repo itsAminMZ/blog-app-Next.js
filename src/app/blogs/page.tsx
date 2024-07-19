@@ -2,28 +2,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 function Page() {
-  const [header, setHeader] = useState("");
-  const [author, setAuthor] = useState("");
-  const [text, setText] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [isFormEmpty, setIsFormEmpty] = useState(true)
-
-
- 
+  const [isFormEmpty, setIsFormVisible] = useState(false);
 
   function deleteUser(id: any) {
+    setError("");
     setLoading(true);
     axios
       .delete(`/api/blog?id=${id}`)
       .then((res) => {
         if (res.data.operation === "done") {
           axios.get("/api/blog").then((res) => {
-            setData((res.data.data).splice(-3));
-            if((res.data.data).length !== 0 ){
-              setIsFormEmpty(true)
-          }
+            setData(res.data.blogs);
           });
           setLoading(false);
         } else {
@@ -37,13 +29,19 @@ function Page() {
 
   useEffect(() => {
     axios.get("/api/blog").then((res) => {
-      setData((res.data.data).splice(-3));
-      if((res.data.data).length !== 0 ){
-        setIsFormEmpty(true)
-    }
+      console.log("get useEffect length: ", res.data.blogs.length);
+
+      setData(res.data.blogs.slice(-3));
+      if (res.data.blogs.length === 0) {
+        console.log("isFormEmpty is falsed");
+
+        setIsFormVisible(false);
+      }
+      else{
+        setIsFormVisible(true)
+      }
     });
   }, []);
-
 
   return (
     <div className='h-screen w-full flex flex-col  items-center p-5 gap-10'>

@@ -65,7 +65,6 @@ function Page() {
 
   useEffect(() => {
     axios.get("/api/blog").then((res) => {
-      // console.log('get useEffect: ',(res.data.blogs));
       console.log("get useEffect length: ", res.data.blogs.length);
 
       setData(res.data.blogs.slice(-3));
@@ -73,6 +72,9 @@ function Page() {
         console.log("isFormEmpty is falsed");
 
         setIsFormVisible(false);
+      }
+      else{
+        setIsFormVisible(true)
       }
     });
   }, []);
