@@ -1,5 +1,5 @@
 // pages/blogs/page.tsx
-import {blogs,idCounter} from '@/app/blog/create/page'
+import {blogs,idCounter} from '@/app/server/blog/create/page'
 
 import { revalidatePath } from "next/cache";
 
@@ -73,8 +73,8 @@ export default async function Page() {
                         <input name='id' value={blog.id} className='hidden' />
                         <input
                           type='submit'
-                          className='bg-red-600 text-white p-2 rounded-lg cursor-pointer'
-                          value='delete user'
+                          className='bg-black text-red-600 font-medium p-2 rounded-lg cursor-pointer'
+                          value='delete blog'
                         />
                       </form>
                     </td>
