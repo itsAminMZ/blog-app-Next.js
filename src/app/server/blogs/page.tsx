@@ -1,10 +1,6 @@
 // pages/blogs/page.tsx
-import {blogs,idCounter} from '@/app/server/blog/create/page'
-
+import { blogs, idCounter } from '@/app/server/blog/create/page';
 import { revalidatePath } from "next/cache";
-
-
-
 
 // Ensure this action is correctly handled on the server side
 async function deleteUserAction(formData: FormData) {
@@ -29,11 +25,11 @@ async function deleteUserAction(formData: FormData) {
 export default async function Page() {
   // Fetch all blogs
   const fetchBlogs = () => {
-    return blogs;
+    return [...blogs].reverse();
   };
 
   // Simulate data fetching
-  const allBlogs = fetchBlogs();
+  const allBlogs = fetchBlogs(); // Reverse the blogs array here
 
   return (
     <div className='h-screen w-full flex flex-col items-center p-5 gap-10'>

@@ -13,14 +13,10 @@ function Page() {
     axios
       .delete(`/client/api/blog?id=${id}`)
       .then((res) => {
-        
-
         if (res.data.operation === "done") {
           axios.get("/client/api/blog").then((res) => {
-            setData(res.data.blogs.slice(-3));
+            setData(res.data.blogs.reverse());
             if (res.data.blogs.length === 0) {
-              console.log("isFormEmpty is falsed");
-      
               setIsFormVisible(false);
             } else {
               setIsFormVisible(true);
@@ -30,7 +26,6 @@ function Page() {
         } else {
           setLoading(false);
         }
-        
       })
       .catch((error) => {
         setLoading(false);
@@ -41,7 +36,7 @@ function Page() {
     axios.get("/client/api/blog").then((res) => {
       console.log("get useEffect length: ", res.data.blogs.length);
 
-      setData(res.data.blogs.slice(-3));
+      setData(res.data.blogs.reverse());
       if (res.data.blogs.length === 0) {
         console.log("isFormEmpty is falsed");
 

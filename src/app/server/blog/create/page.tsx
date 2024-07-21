@@ -107,7 +107,7 @@ export default async function Page() {
                 </tr>
               </thead>
               <tbody>
-                {blogs.slice(-3).map((blog, index) => (
+                {blogs.slice(-3).reverse().map((blog, index) => (
                   <tr key={index} className="hover:bg-gray-50 text-center">
                     <td className="py-3 px-4 border-b">{blog.id}</td>
                     <td className="py-3 px-4 border-b">{blog.author}</td>
