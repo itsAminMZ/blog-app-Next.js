@@ -6,7 +6,7 @@ function Page() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
-
+  //ss
   function deleteUser(id: any) {
     setError("");
     setLoading(true);
