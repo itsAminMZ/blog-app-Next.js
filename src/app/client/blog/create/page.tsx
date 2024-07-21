@@ -101,7 +101,7 @@ function Page() {
             </label>
             <label
               htmlFor='author'
-              className='relative -top-9 text-xl font-medium'
+              className='relative -top-14 text-xl font-medium'
             >
               author
             </label>
